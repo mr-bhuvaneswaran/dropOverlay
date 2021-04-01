@@ -1,3 +1,11 @@
-<p>
-  slide works!
-</p>
+<div
+  #item
+  cdkDropList
+  [id]="slide.color"
+  class="slide-inner-box"
+  [cdkDropListData]="slide.overlay"
+  (cdkDropListDropped)="drop($event)"
+  
+  >
+  <p *ngFor="let overlay of slide.overlay">{{overlay.image}}</p>
+</div>

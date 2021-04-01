@@ -27,12 +27,11 @@ export class AppComponent {
         this.addedSlides = this.slideList.toArray();
         this.cd.markForCheck();
         this.cd.detectChanges();
-        console.log(this.addedSlides);
       }),
     ).subscribe();
   }
 
-  drop(event: CdkDragDrop<number[]>) {
+  drop(event: CdkDragDrop<number[]>, location: string) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -40,6 +39,13 @@ export class AppComponent {
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
+                        
+      if(location == 'slide') {
+        event.item.data.overlay.forEach(overlay => {
+          this.sketches.push(overlay);
+        });
+        event.item.data.overlay = [];
+      }
     }
   }
 

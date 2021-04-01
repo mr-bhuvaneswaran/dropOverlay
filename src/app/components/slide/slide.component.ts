@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-slide',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SlideComponent implements OnInit {
 
+  @Input() slide ;
+
   constructor() { }
 
   ngOnInit() {
   }
+
+
 
 }

@@ -1,52 +1,70 @@
+<div class="header">
+  <div class="title">Playbook Assignment</div>
+  <div class="nav">
+    <img src="assets/arrow-back.jpg" height="20" style="padding: 5px; margin-right: 12px;">
+    <img src="assets/arrow-right.jpg" height="30" style="margin-right: 12px;">
+    <img src="assets/cross.jpg" height="20" style="padding-bottom: 5px; margin-right: 12px;">
+    <img src="assets/home.jpeg" height="24"style="padding-bottom: 5px; margin-right: 12px;">
+    <input type="text" value="https://playbook.demo" style="position: absolute;padding: 5px; width: 75%;">
+    <input type="text" placeholder="search" style="position: absolute;padding: 5px; right: 12px;">
+  </div>
+</div>
 <div class="wrapper">
 
   <div class="main-content" >
-    <div class="slide-container">
-      <h2>Slides</h2>
-    
-      <div
-        id="slides"
-        cdkDropList
-        [cdkDropListData]="slides"
-        cdkDropListConnectedTo="play-area"
-        class="slide-list"
-        (cdkDropListDropped)="drop($event)">
+    <div class="inner-content" CdkDropListGroup>
+      <div class="slide-container">
+        <h2>Slides</h2>
+      
         <div
-          class="slide-box"
-          *ngFor="let slide of slides"
-          [ngStyle]="{'background-color' : slide.color}"
-          [cdkDragData]="slide"
-          cdkDrag>
-        <div
-          #item
+          id="slides"
           cdkDropList
-          [id]="slide.color"
-          [cdkDropListData]="slide.overlay"
-          (cdkDropListDropped)="drop($event)"
-          
-          >
-          <p *ngFor="let overlay of slide.overlay">{{overlay.image}}</p>
-        </div>
+          [cdkDropListData]="slides"
+          cdkDropListConnectedTo="play-area"
+          class="slide-list"
+          (cdkDropListDropped)="drop($event, 'slide')">
+  
+          <div
+            class="slide-box"
+            *ngFor="let slide of slides"
+            [ngStyle]="{'background-color' : slide.color}"
+            [cdkDragData]="slide"
+            cdkDrag>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="play-area-container">    
-      <div
-        id="play-area"
-        cdkDropList
-        [cdkDropListData]="playArea"
-        cdkDropListConnectedTo="slides"
-        class="play-list"
-        (cdkDropListDropped)="drop($event)"
-        >
+  
+      <div class="play-area-container">    
         <div
-          class="play-box"
-          *ngFor="let play of playArea"
-          [ngStyle]="{'background-color' : play.color}"
-          [cdkDragData]="play"
-          cdkDrag></div>
+          id="play-area"
+          cdkDropList
+          [cdkDropListData]="playArea"
+          cdkDropListConnectedTo="slides"
+          class="play-list"
+          (cdkDropListDropped)="drop($event, 'play')"
+          >
+          <div
+            class="play-box"
+            *ngFor="let play of playArea"
+            [ngStyle]="{'background-color' : play.color}"
+            [cdkDragData]="play"
+            cdkDrag>
+            <div
+              #item
+              cdkDropList
+              [id]="play.color"
+              class="slide-inner-box"
+              [cdkDropListData]="play.overlay"
+              (cdkDropListDropped)="drop($event, 'item')">
+              <img 
+                class="sketch-box"
+                *ngIf="play.overlay && play.overlay.length > 0 && play.overlay[0].image"
+                [src]="'assets/' + play.overlay[0].image">
+          </div>
+          </div>
+        </div>
       </div>
+      
     </div>
     
     
@@ -59,17 +77,16 @@
         [cdkDropListData]="sketches"
         [cdkDropListConnectedTo]="addedSlides"
         class="sketch-list"
-        (cdkDropListDropped)="drop($event)">
+        (cdkDropListDropped)="drop($event, 'sketch')">
 
         <div
           *ngFor="let sketch of sketches"
           cdkDrag
           [cdkDragData]="sketch">
-          <p>{{sketch.image}}</p>
           
-          <!-- <img 
+          <img *ngIf="sketch && sketch.image"
             class="sketch-box"
-            [src]="'assets/' + sketch.image"> -->
+            [src]="'assets/' + sketch.image">
         </div>
 
       </div>
